@@ -26,7 +26,6 @@ def _api_url(api_id):
     return _API_URL_BASE + str(api_id) + "?full=Y"
 
 
-
 def _search_form(city_id = 0, provider_id = 0, site_id = 0):
     return {
         "CityID": str(city_id),
@@ -34,6 +33,7 @@ def _search_form(city_id = 0, provider_id = 0, site_id = 0):
         "TopupPointID": str(site_id),
         "Ajax": "true"
     }
+
 
 def _get_select_options(field, city_id = 0, provider_id = 0):
     form = _search_form(
@@ -125,7 +125,7 @@ class Circuit:
     def size(self): return self._size
     
     @property
-    def walls(self): return self._tuples
+    def walls(self): return self._walls
     
     @property
     def id(self): return self._id
