@@ -1,10 +1,10 @@
 import requests
 import json
-from datetime import datetime
 from bs4 import BeautifulSoup as BS
 from .exceptions import *
 from .machine import *
 from .wall import *
+from .timestamp import *
 
 _CIRCUIT_URL_BASE = "https://www.circuit.co.uk/circuit-view/"
 _API_URL_BASE = "https://358n2fyyol.execute-api.eu-west-1.amazonaws.com/prod/api/v1/search/cs3/"
@@ -25,8 +25,7 @@ APP_TYPE = {
 def _api_url(api_id):
     return _API_URL_BASE + str(api_id) + "?full=Y"
 
-def _datetime(timestamp):
-    return datetime.strptime(timestamp, "%Y%m%d%H%M%S")
+
 
 def _search_form(city_id = 0, provider_id = 0, site_id = 0):
     return {
@@ -91,8 +90,8 @@ class Circuit:
             raise CircuitSiteNotFoundError(self._id)
         
         self._name = data["site"]["displayName"]
-        self._created =  _datetime(data["site"]["createdTimeUtc"])
-        self._last_updated = _datetime(data["site"]["lastUpdatedUtc"])
+        self._created =  to_datetime(data["site"]["createdTimeUtc"])
+        self._last_updated = to_datetime(data["site"]["lastUpdatedUtc"])
         
         size = data["site"]["room"]["size"]
         self._size = (size["D"], size["W"], size["H"]) # d,w,h

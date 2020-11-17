@@ -1,3 +1,5 @@
+from .timestamp import *
+
 class Machine:
     def __init__(self, app_data, pos_data=None, rot=None, top=False):
         self._app_type = app_data["t"]
@@ -19,8 +21,8 @@ class Machine:
         self._rotation = rot if rot else app_data["rot"]
         
         
-        self._xon = _datetime(app_data["xon"]) if "xon" in app_data else None
-        self._xoff = _datetime(app_data["xoff"]) if "xoff" in app_data else None
+        self._xon = to_datetime(app_data["xon"]) if "xon" in app_data else None
+        self._xoff = to_datetime(app_data["xoff"]) if "xoff" in app_data else None
         self._cycle_count = app_data["cycles"] if "cycles" in app_data else None
     
     @property
