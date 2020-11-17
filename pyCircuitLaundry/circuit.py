@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 from bs4 import BeautifulSoup as BS
 from .exceptions import *
 
