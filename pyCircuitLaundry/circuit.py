@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 from bs4 import BeautifulSoup as BS
 from .exceptions import *
+from .machine import *
+from .wall import *
 
 _CIRCUIT_URL_BASE = "https://www.circuit.co.uk/circuit-view/"
 _API_URL_BASE = "https://358n2fyyol.execute-api.eu-west-1.amazonaws.com/prod/api/v1/search/cs3/"
