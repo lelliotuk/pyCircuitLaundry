@@ -6,6 +6,8 @@
 `pip install git+https://github.com/lelliotuk/pyCircuitLaundry/`
 
 ## Usage
+If you're looking for random laundry rooms, don't be surprised if a lot of them don't work because a lot of them are out of service on the website.
+
 You currently need to make 4 requests to find the API ID for a specific site:
 
 `get_cities()`  
