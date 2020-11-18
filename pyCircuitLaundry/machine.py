@@ -1,5 +1,5 @@
 from .timestamp import *
-
+from datetime import datetime, timedelta
 class Machine:
     def __init__(self, app_data, pos_data=None, rot=None, top=False):
         self._app_type = app_data["t"]
@@ -20,9 +20,10 @@ class Machine:
         
         self._rotation = rot if rot else app_data["rot"]
         
-        
-        self._xon = to_datetime(app_data["xon"]) if "xon" in app_data else None
-        self._xoff = to_datetime(app_data["xoff"]) if "xoff" in app_data else None
+        self._average_cycle = timedelta(minutes=app_data["avc"]) if "avc" in app_data else None
+        self._started = to_datetime(app_data["xon"]) if "xon" in app_data else None
+        self._finished = to_datetime(app_data["xoff"]) if "xoff" in app_data else None
+        self._est_finish = self._started + self._average_cycle
         self._cycle_count = app_data["cycles"] if "cycles" in app_data else None
     
     @property
@@ -50,13 +51,16 @@ class Machine:
     def rotation(self): return self._rotation
     
     @property
-    def xon(self): return self._xon
+    def started(self): return self._started
     
     @property
-    def xoff(self): return self._xoff
+    def finished(self): return self._finished
     
     @property
     def cycle_count(self): return self._cycle_count
     
     @property
     def average_cycle(self): return self._average_cycle
+
+    @property
+    def est_finish(self): return self._est_finish
