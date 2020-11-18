@@ -77,11 +77,11 @@ def get_api_id(city_id = 0, provider_id = 0, site_id = 0):
 
 class Circuit:
     def __init__(self, api_id):
-        self._id = api_id
+        self._api_id = api_id
         self.update()
     
     def update(self):
-        response = requests.get(_api_url(str(self._id))).content
+        response = requests.get(_api_url(self._api_id)).content
         data = json.loads(response)
         self._data = data
         
@@ -92,14 +92,15 @@ class Circuit:
         self._name = data["site"]["displayName"]
         self._created =  to_datetime(data["site"]["createdTimeUtc"])
         self._last_updated = to_datetime(data["site"]["lastUpdatedUtc"])
+        self._site_id = data["site"]["siteNumber"]
         
         size = data["site"]["room"]["size"]
-        self._size = (size["D"], size["W"], size["H"]) # d,w,h
+        self._size = (size["W"], size["D"], size["H"]) # d,w,h
         
-        walls = []
+        self._layout = []
         for wall_data in data["site"]["room"]["walls"]:
-            walls.append(Wall(wall_data))
-        self._walls = tuple(walls)
+            self._layout.append(Wall(wall_data))
+        self._layout = tuple(self._layout)
         
         self._machines = []
         for app_data in data["site"]["room"]["apps"]:
@@ -110,7 +111,15 @@ class Circuit:
                 self._machines.append(Machine(app_data["bottom"], pos_data, rot))
             else:
                 self._machines.append(Machine(app_data))
-        #self._machines = machines
+        self._machines = tuple(self._machines)
+        
+        floor_colour = data["site"]["room"]["colours"]["ground"]
+        self._floor_colour = (
+            floor_colour["r"] * 255, floor_colour["g"] * 255, floor_colour["b"] * 255)
+        
+        wall_colour = data["site"]["room"]["colours"]["wallDefault"]
+        self._wall_colour = (
+            wall_colour["r"] * 255, wall_colour["g"] * 255, wall_colour["b"] * 255)
         
     @property
     def data(self): return self._data
@@ -122,16 +131,25 @@ class Circuit:
     def machines(self): return self._machines
     
     @property
-    def size(self): return self._size
+    def dimensions(self): return self._dimensions
     
     @property
-    def walls(self): return self._walls
+    def layout(self): return self._layout
     
     @property
-    def id(self): return self._id
+    def api_id(self): return self._api_id
     
     @property
     def created(self): return self._created
     
     @property
     def last_updated(self): return self._last_updated
+    
+    @property
+    def site_id(self): return self._site_id
+    
+    @property
+    def wall_colour(self): return self._wall_colour
+    
+    @property
+    def floor_colour(self): return self._floor_colour
