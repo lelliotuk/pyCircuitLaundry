@@ -7,7 +7,7 @@ from .wall import *
 from .timestamp import *
 
 _CIRCUIT_URL_BASE = "https://www.circuit.co.uk/circuit-view/"
-_API_URL_BASE = "https://358n2fyyol.execute-api.eu-west-1.amazonaws.com/prod/api/v1/search/cs3/"
+_API_URL_BASE = "https://358n2fyyol.execute-api.eu-west-1.amazonaws.com/prod/api/v1/"
 
 APP_STATE = {
     "A": "Active", 
@@ -23,7 +23,7 @@ APP_TYPE = {
 }
 
 def _api_url(api_id):
-    return _API_URL_BASE + str(api_id) + "?full=Y"
+    return _API_URL_BASE + "search/cs3/" + str(api_id) + "?full=Y"
 
 
 def _search_form(city_id = 0, provider_id = 0, site_id = 0):
@@ -57,7 +57,7 @@ def get_providers(city_id):
 
 def get_sites(city_id, provider_id):
     return _get_select_options("TopupPointID", city_id=city_id, provider_id=provider_id)
-
+    
 
 def get_api_id(city_id = 0, provider_id = 0, site_id = 0):
     form = _search_form(
@@ -74,6 +74,16 @@ def get_api_id(city_id = 0, provider_id = 0, site_id = 0):
     soup = soup.find("iframe", {"class":"circuit-view-iframe"})
     return soup["src"].split("/")[-1]
 
+
+# def api_get_cities():
+    # response = requests.get(_API_URL_BASE + "locations").content
+    # data = json.loads(response)
+    # return tuple(data)
+
+# def api_get_providers(city):
+    # response = requests.get(_API_URL_BASE + "search/location/" + city + "/campus").content
+    # data = json.loads(response)
+    # return {p["name"]:p["id"] for p in data}
 
 class Circuit:
     def __init__(self, api_id):

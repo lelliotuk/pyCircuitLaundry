@@ -2,6 +2,10 @@
 # pyCircuitLaundry
  Circuit Laundry Circuit View API wrapper
 
+## Dependencies
+- requests
+- bs4
+
 ## Install
 `pip install git+https://github.com/lelliotuk/pyCircuitLaundry/`
 
@@ -10,20 +14,22 @@ If you're looking for random laundry rooms, don't be surprised if a lot of them 
 
 You currently need to make 4 requests to find the API ID for a specific site:
 
-`get_cities()`  
+`import pyCircuitLaundry as circuit
+
+`circuit.get_cities()`  
 Get dict of cities with their internal IDs
 
-`get_providers(city_id)`  
+`circuit.get_providers(city_id)`  
 Get dict of providers from a city using its internal ID
 
-`get_sites(city_id, provider_id)`  
+`circuit.get_sites(city_id, provider_id)`  
 Get dict of sites from a provider (both parameters are necessary)
 
-`get_api_id(site_id)`
-Finally, get the API ID for the site
+`circuit.get_api_id(city_id, provider_id, site_id)`
+Finally, get the API ID for the site (again, all 3 parameters are necessary)
 
 Then you can create a laundry room oject using the API ID:
-`room = Circuit(api_id)`
+`room = circuit.Circuit(api_id)`
 
 ---
 ### `Circuit` object
