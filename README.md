@@ -14,23 +14,25 @@ If you're looking for random laundry rooms, don't be surprised if a lot of them 
 
 You currently need to make 4 requests to find the API ID for a specific site:
 
-`import pyCircuitLaundry as circuit
+```python
+import pyCircuitLaundry as circuit
 
-`circuit.get_cities()`  
-Get dict of cities with their internal IDs
+# Get dict of cities with their internal IDs
+circuit.get_cities()
 
-`circuit.get_providers(city_id)`  
-Get dict of providers from a city using its internal ID
+# Get dict of providers from a city using its internal ID
+circuit.get_providers(city_id)
 
-`circuit.get_sites(city_id, provider_id)`  
-Get dict of sites from a provider (both parameters are necessary)
+# Get dict of sites from a provider (both parameters are necessary)
+circuit.get_sites(city_id, provider_id)
 
-`circuit.get_api_id(city_id, provider_id, site_id)`
-Finally, get the API ID for the site (again, all 3 parameters are necessary)
+# Finally, get the API ID for the site (again, all 3 parameters are necessary)
+circuit.get_api_id(city_id, provider_id, site_id)
 
-Then you can create a laundry room oject using the API ID:
-`room = circuit.Circuit(api_id)`
 
+# Then you can create a laundry room oject using the API ID:
+room = circuit.Circuit(api_id)
+```
 ---
 ### `Circuit` object
 Laundry room
