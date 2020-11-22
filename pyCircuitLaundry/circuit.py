@@ -107,21 +107,27 @@ class Circuit:
         size = data["site"]["room"]["size"]
         self._size = (size["W"], size["D"], size["H"]) # d,w,h
         
-        self._layout = []
+        self._layout = set()
         for wall_data in data["site"]["room"]["walls"]:
-            self._layout.append(Wall(wall_data))
-        self._layout = tuple(self._layout)
+            self._layout.add(Wall(wall_data))
+
+        self._washers = set()
+        self._dryers = set()
         
-        self._machines = []
         for app_data in data["site"]["room"]["apps"]:
             if app_data["t"] == "ST":
                 pos_data = app_data["pos"]
                 rot = app_data["rot"]
-                self._machines.append(Machine(app_data["top"], pos_data, rot, True))
-                self._machines.append(Machine(app_data["bottom"], pos_data, rot))
+                
+                type_list = self._washers if app_data["top"]["t"] == "W" else self._dryers
+                type_list.add(Machine(app_data["top"], pos_data, rot, True))
+                
+                type_list = self._washers if app_data["bottom"]["t"] == "W" else self._dryers
+                type_list.add(Machine(app_data["bottom"], pos_data, rot))
             else:
-                self._machines.append(Machine(app_data))
-        self._machines = tuple(self._machines)
+                type_list = self._washers if app_data["t"] == "W" else self._dryers
+                type_list.add(Machine(app_data))
+
         
         floor_colour = data["site"]["room"]["colours"]["ground"]
         self._floor_colour = (
@@ -131,6 +137,16 @@ class Circuit:
         self._wall_colour = (
             wall_colour["r"] * 255, wall_colour["g"] * 255, wall_colour["b"] * 255)
         
+        self._available_washers = set()
+        self._available_dryers = set()
+        
+        for w in self._washers:
+            if w.state == "I": self._available_washers.add(w)
+            
+        for d in self._dryers:
+            if d.state == "I": self._available_dryers.add(d)
+        
+        
     @property
     def data(self): return self._data
     
@@ -138,13 +154,28 @@ class Circuit:
     def name(self): return self._name
     
     @property
-    def machines(self): return self._machines
+    def machines(self): return self._washers | self._dryers
+    
+    @property
+    def washers(self): return self._washers.copy()
+    
+    @property
+    def dryers(self): return self._dryers.copy()
+    
+    @property
+    def available_machines(self): return self._available_washers | self._available_dryers
+    
+    @property
+    def available_washers(self): return self._available_washers.copy()
+    
+    @property
+    def available_dryers(self): return self._available_dryers.copy()
     
     @property
     def dimensions(self): return self._dimensions
     
     @property
-    def layout(self): return self._layout
+    def layout(self): return self._layout.copy()
     
     @property
     def api_id(self): return self._api_id
