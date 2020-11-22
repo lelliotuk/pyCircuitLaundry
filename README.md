@@ -45,8 +45,13 @@ Laundry room
 `api_id` - API ID  
 `site_id` - Site ID  
 `name` - External name of the site  
-`machines` - Tuple of `Machine` objects  
-`dimensions` - Tuple of room dimensions (width, depth, height)  
+`machines` - Set of `Machine` objects  
+`washers` - Set of washers  
+`dryers` - Set of dryers  
+`available_machines` - Set of machines that are available for use (`"I"` inactive state only)  
+`available_washers` - Set of available washers  
+`available_dryers` - Set of available dryers  
+`dimensions` - Set of room dimensions (width, depth, height)  
 `layout` - Tuple of walls defining layout of room  
 `created` - Datetime of when site was created (probably when Circuit/online functionality was added to the site/room)  
 `last_updated` - Datetime of last update to the API from the site  
