@@ -86,6 +86,8 @@ A single washing machine or dryer
 `average_cycle` - Timedelta of average cycle time  
 `cycle_count` - Int of total cycles  
 
+Note: The Circuit API doesn't always provide data on the timings of the cycles, so you should check if `started`, `finished`, `est_finish`, and `average_cycle` are not `None`
+
 ---
 ### `Wall` object
 A wall within the laundry room  
