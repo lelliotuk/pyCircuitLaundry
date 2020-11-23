@@ -21,7 +21,7 @@ class Machine:
         self._rotation = rot if rot else app_data["rot"]
         
         if "xon" in app_data and "avc" in app_data:
-            self._average_cycle = timedelta(minutes=app_data["avc"])
+            self._average_cycle = timedelta(minutes=int(app_data["avc"]))
             self._started = to_datetime(app_data["xon"])
             self._finished = to_datetime(app_data["xoff"]) if "xoff" in app_data else None
             self._est_finish = self._started + self._average_cycle
