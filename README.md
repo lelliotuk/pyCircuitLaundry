@@ -33,6 +33,9 @@ circuit.get_api_id(city_id, provider_id, site_id)
 # Then you can create a laundry room oject using the API ID:
 room = circuit.Circuit(api_id)
 ```
+
+**Note: the API is not guaranteed to provide values for certain attributes in every laundry room, so you should check attributes with an asterisk next to them for `None`**
+
 ---
 ### `Circuit` object
 Laundry room
@@ -45,7 +48,7 @@ Laundry room
 `api_id` - API ID  
 `site_id` - Site ID  
 `name` - External name of the site  
-`postcode` - Postcode of the site  
+`postcode` **\*** - Postcode of the site  
 `machines` - Set of `Machine` objects  
 `washers` - Set of washers  
 `dryers` - Set of dryers  
@@ -81,10 +84,10 @@ A single washing machine or dryer
 `dimensions` - Tuple of machine dimensions (width, depth, height)  
 `position` - Tuple of machine position in room (last is height)  
 `rotation` - Int rotation of machine in room  
-`started` - Datetime of when machine was started  
-`finished` - Datetime of when machine was last finished  
-`est_finish` - Datetime of estimated finish  
-`average_cycle` - Timedelta of average cycle time  
+`started` **\*** - Datetime of when machine was started  
+`finished` **\*** - Datetime of when machine was last finished (if this is `None`, `est_finish` may provide a similar time)  
+`est_finish` **\*** - Datetime of estimated finish  
+`average_cycle` **\*** - Timedelta of average cycle time  
 `cycle_count` - Int of total cycles  
 
 ---
