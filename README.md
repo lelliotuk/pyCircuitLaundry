@@ -45,6 +45,7 @@ Laundry room
 `api_id` - API ID  
 `site_id` - Site ID  
 `name` - External name of the site  
+`postcode` - Postcode of the site  
 `machines` - Set of `Machine` objects  
 `washers` - Set of washers  
 `dryers` - Set of dryers  
@@ -85,8 +86,6 @@ A single washing machine or dryer
 `est_finish` - Datetime of estimated finish  
 `average_cycle` - Timedelta of average cycle time  
 `cycle_count` - Int of total cycles  
-
-Note: The Circuit API doesn't always provide data on the timings of the cycles, so you should check if `started`, `finished`, `est_finish`, and `average_cycle` are not `None`
 
 ---
 ### `Wall` object
