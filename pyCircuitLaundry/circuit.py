@@ -100,6 +100,7 @@ class Circuit:
             raise CircuitSiteNotFoundError(self._id)
         
         self._name = data["site"]["displayName"]
+        self._available = data["site"]["available"]
         self._postcode = data["site"]["postcode"] if "postcode" in data["site"] else None
         self._created =  to_datetime(data["site"]["createdTimeUtc"])
         self._last_updated = to_datetime(data["site"]["lastUpdatedUtc"])
@@ -153,6 +154,9 @@ class Circuit:
     
     @property
     def name(self): return self._name
+    
+    @property
+    def available(self): return self._available
     
     @property
     def postcode(self): return self._postcode
