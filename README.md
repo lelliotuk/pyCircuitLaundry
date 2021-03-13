@@ -51,6 +51,7 @@ Laundry room
 `api_id` - API ID  
 `site_id` - Site ID  
 `name` - External name of the site  
+`available` - Is the site available on the Circuit website? Check for `True` before assuming a site has no machines. API will still respond with site data (but no machines) if the site is unavailable  
 `postcode` **\*** - Postcode of the site  
 `machines` - Set of `Machine` objects  
 `washers` - Set of washers  
