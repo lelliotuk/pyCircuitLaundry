@@ -1,6 +1,9 @@
 
 # pyCircuitLaundry
- Circuit Laundry Circuit View API wrapper
+Circuit Laundry Circuit View API wrapper  
+https://www.circuit.co.uk/circuit-view/
+
+There is a similar service by a similar name called LaundryView, however this is not compatible. I might consider making it work in the future.
 
 ## Dependencies
 - requests
