@@ -53,13 +53,13 @@ Laundry room
 `name` - External name of the site  
 `available` - Is the site available on the Circuit website? Check for `True` before assuming a site has no machines. API will still respond with site data (but no machines) if the site is unavailable  
 `postcode` **\*** - Postcode of the site  
-`machines` - Set of `Machine` objects  
-`washers` - Set of washers  
-`dryers` - Set of dryers  
-`available_machines` - Set of machines that are available for use (`"I"` inactive state only)  
-`available_washers` - Set of available washers  
-`available_dryers` - Set of available dryers  
-`dimensions` - Set of room dimensions (width, depth, height)  
+`machines` - Tuple of `Machine` objects  
+`washers` - Tuple of washers  
+`dryers` - Tuple of dryers  
+`available_machines` - Tuple of machines that are available for use (`"I"` inactive state only)  
+`available_washers` - Tuple of available washers  
+`available_dryers` - Tuple of available dryers  
+`dimensions` - Tuple of room dimensions (width, depth, height)  
 `layout` - Tuple of walls defining layout of room  
 `created` - Datetime of when site was created (probably when Circuit/online functionality was added to the site/room)  
 `last_updated` - Datetime of last update to the API from the site  

@@ -88,6 +88,13 @@ def get_api_id(city_id = 0, provider_id = 0, site_id = 0):
 class Circuit:
     def __init__(self, api_id):
         self._api_id = api_id
+        
+        self._layout = []
+        self._washers = []
+        self._dryers = []
+        self._available_washers = []
+        self._available_dryers = []
+        
         self.update()
     
     def update(self):
@@ -109,12 +116,11 @@ class Circuit:
         size = data["site"]["room"]["size"]
         self._size = (size["W"], size["D"], size["H"]) # d,w,h
         
-        self._layout = set()
+        
         for wall_data in data["site"]["room"]["walls"]:
-            self._layout.add(Wall(wall_data))
+            self._layout.append(Wall(wall_data))
 
-        self._washers = set()
-        self._dryers = set()
+
         
         for app_data in data["site"]["room"]["apps"]:
             if app_data["t"] == "ST":
@@ -122,13 +128,13 @@ class Circuit:
                 rot = app_data["rot"]
                 
                 type_list = self._washers if app_data["top"]["t"] == "W" else self._dryers
-                type_list.add(Machine(app_data["top"], pos_data, rot, True))
+                type_list.append(Machine(app_data["top"], pos_data, rot, True))
                 
                 type_list = self._washers if app_data["bottom"]["t"] == "W" else self._dryers
-                type_list.add(Machine(app_data["bottom"], pos_data, rot))
+                type_list.append(Machine(app_data["bottom"], pos_data, rot))
             else:
                 type_list = self._washers if app_data["t"] == "W" else self._dryers
-                type_list.add(Machine(app_data))
+                type_list.append(Machine(app_data))
 
         
         floor_colour = data["site"]["room"]["colours"]["ground"]
@@ -139,15 +145,17 @@ class Circuit:
         self._wall_colour = (
             wall_colour["r"] * 255, wall_colour["g"] * 255, wall_colour["b"] * 255)
         
-        self._available_washers = set()
-        self._available_dryers = set()
-        
         for w in self._washers:
-            if w.state == "I": self._available_washers.add(w)
+            if w.state == "I": self._available_washers.append(w)
             
         for d in self._dryers:
-            if d.state == "I": self._available_dryers.add(d)
+            if d.state == "I": self._available_dryers.append(d)
         
+        self._layout = tuple(self._layout)
+        self._washers = tuple(self._washers)
+        self._dryers = tuple(self._dryers)
+        self._available_washers = tuple(self._available_washers)
+        self._available_dryers = tuple(self._available_dryers)
         
     @property
     def data(self): return self._data
@@ -162,28 +170,28 @@ class Circuit:
     def postcode(self): return self._postcode
     
     @property
-    def machines(self): return self._washers | self._dryers
+    def machines(self): return self._washers + self._dryers
     
     @property
-    def washers(self): return self._washers.copy()
+    def washers(self): return self._washers
     
     @property
-    def dryers(self): return self._dryers.copy()
+    def dryers(self): return self._dryers
     
     @property
-    def available_machines(self): return self._available_washers | self._available_dryers
+    def available_machines(self): return self._available_washers + self._available_dryers
     
     @property
-    def available_washers(self): return self._available_washers.copy()
+    def available_washers(self): return self._available_washers
     
     @property
-    def available_dryers(self): return self._available_dryers.copy()
+    def available_dryers(self): return self._available_dryers
     
     @property
     def dimensions(self): return self._dimensions
     
     @property
-    def layout(self): return self._layout.copy()
+    def layout(self): return self._layout
     
     @property
     def api_id(self): return self._api_id
