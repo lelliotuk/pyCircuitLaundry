@@ -7,6 +7,6 @@ setuptools.setup(
     description='Circuit Laundry Circuit View API wrapper',
     packages=setuptools.find_packages(),
     url='https://github.com/lelliotuk/pyCircuitLaundry',
-    install_requires=['requests','BeautifulSoup4'],
+    install_requires=['requests','beautifulsoup4'],
     python_requires='>=3.0'
 )
