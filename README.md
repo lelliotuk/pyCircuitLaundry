@@ -18,7 +18,7 @@ If you're looking for random laundry rooms, don't be surprised if a lot of them 
 You currently need to make 4 requests to find the API ID for a specific site:
 
 ```python
-import pyCircuitLaundry as circuit
+import pycircuitlaundry as circuit
 
 # Get dict of cities with their internal IDs
 circuit.get_cities()
