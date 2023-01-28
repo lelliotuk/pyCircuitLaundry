@@ -40,7 +40,7 @@ room = circuit.Circuit(api_id)
 **Note: the API is not guaranteed to provide values for certain attributes in every laundry room, so you should check attributes with an asterisk next to them for `None`**
 
 ---
-### `Circuit` object
+### `Circuit` class
 Laundry room
 
 **Methods**  
@@ -67,7 +67,7 @@ Laundry room
 `floor_colour` - Colour of room floor  
 
 ---
-### `Machine` object
+### `Machine` class
 A single washing machine or dryer
 
 **Attributes**  
@@ -95,7 +95,7 @@ A single washing machine or dryer
 `cycle_count` - Int of total cycles  
 
 ---
-### `Wall` object
+### `Wall` class
 A wall within the laundry room  
 
 **Attributes**  
